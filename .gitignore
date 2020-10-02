@@ -1,4 +1,8 @@
 
+# 파일 크기 때문에 제외하는 항목
+chs19_all.csv
+chs19_all.txt
+
 ### macOS ###
 # General
 .DS_Store
