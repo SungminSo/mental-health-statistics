@@ -13,21 +13,30 @@ is_sma_01z1 = data['sma_01z1'] == 3
 
 tmp_data = data[is_qoc_01z1 & is_sma_01z1]
 
-park_rate_data = pd.read_csv('구별 공원면적 비율.txt', 'r', encoding='utf-8', delimiter='\t')
+# park_rate_data = pd.read_csv('구별 공원면적 비율.txt', 'r', encoding='utf-8', delimiter='\t')
+park_rate_data = pd.read_csv('인구별 공원 넓이.txt', 'r', encoding='CP949', delimiter='\t')
+print(park_rate_data.head(10))
 
-merged_data = pd.merge(tmp_data, park_rate_data, how='inner', left_on='signgu_code', right_on='구분')
+merged_data = pd.merge(tmp_data, park_rate_data, how='left', left_on='signgu_code', right_on='자치구')
 # print(merged_data.loc[:, ['signgu_code', 'mta_01z1', 'mta_02z1', 'mtb_01z1', '구분', '공원율(%)']].head())
 
-print(merged_data.head())
+# print(merged_data.head())
 # print(merged_data.mean())
 
 print(merged_data.groupby('signgu_code').mean())
 
-# 구 전체면적 대비 공원면적
-print('주관적 스트레스 기준:', merged_data['mta_01z1'].corr(merged_data['공원율(%)']))
-print('스트레스 인한 정신상담 여부:', merged_data['mta_02z1'].corr(merged_data['공원율(%)']))
-print('우울감 경험 여부:', merged_data['mtb_01z1'].corr(merged_data['공원율(%)']))
-print('행복감 지수:', merged_data['qoc_07z1'].corr(merged_data['공원율(%)']))
+# 구별 인구당 공원 면적
+print('주관적 스트레스 기준:', merged_data['mta_01z1'].corr(merged_data['1인당도시공원면적']))
+print('스트레스 인한 정신상담 여부:', merged_data['mta_02z1'].corr(merged_data['1인당도시공원면적']))
+print('우울감 경험 여부:', merged_data['mtb_01z1'].corr(merged_data['1인당도시공원면적']))
+print('행복감 지수:', merged_data['qoc_07z1'].corr(merged_data['1인당도시공원면적']))
+
+# 구별 전체면적 대비 공원면적
+# print('주관적 스트레스 기준:', merged_data['mta_01z1'].corr(merged_data['공원율(%)']))
+# print('스트레스 인한 정신상담 여부:', merged_data['mta_02z1'].corr(merged_data['공원율(%)']))
+# print('우울감 경험 여부:', merged_data['mtb_01z1'].corr(merged_data['공원율(%)']))
+# print('행복감 지수:', merged_data['qoc_07z1'].corr(merged_data['공원율(%)']))
+
 #
 # print(merged_data[''])
 
